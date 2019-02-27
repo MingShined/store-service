@@ -11,6 +11,8 @@ module.exports = app => {
     sort: { type: String },
     bannerList: { type: String },
     details: { type: String },
+    gmtCreate: { type: String },
+    status: { type: Number },
   });
 
   return mongoose.model('Good', goodSchema, 'good');

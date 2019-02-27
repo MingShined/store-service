@@ -7,9 +7,14 @@ class GoodService extends Service {
     return this.ctx.model.Good.create(payload);
   }
   async query(payload) {
-    const { page, size } = payload;
+    const { page, size, sort } = payload;
     const limit = parseInt(size);
     const skip = parseInt(page, 10) * (limit || 10);
+    if (sort) {
+      return this.ctx.model.Good.find({ sort })
+        .limit(limit)
+        .skip(skip);
+    }
     return this.ctx.model.Good.find()
       .limit(limit)
       .skip(skip);

@@ -13,6 +13,7 @@ module.exports = app => {
     details: { type: String },
     gmtCreate: { type: String },
     status: { type: Number },
+    hot: { type: Number },
   });
 
   return mongoose.model('Good', goodSchema, 'good');

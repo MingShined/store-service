@@ -6,4 +6,5 @@
 module.exports = app => {
   require('./router/index')(app);
   require('./router/good')(app);
+  require('./router/user')(app);
 };

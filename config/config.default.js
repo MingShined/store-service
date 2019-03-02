@@ -10,7 +10,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1544961945990_6105';
 
   // add your config here
-  config.middleware = [];
+  config.middleware = [ 'errorHandler' ];
 
   /**
    * @name mongo配置
@@ -22,8 +22,8 @@ module.exports = appInfo => {
       useMongoClient: true,
       autoReconnect: true,
       reconnectTries: Number.MAX_VALUE,
-      bufferMaxEntries: 0
-    }
+      bufferMaxEntries: 0,
+    },
   };
 
   /**
@@ -58,8 +58,8 @@ module.exports = appInfo => {
    */
   config.security = {
     csrf: {
-      enable: false
-    }
+      enable: false,
+    },
   };
 
   return config;

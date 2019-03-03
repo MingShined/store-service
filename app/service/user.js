@@ -31,8 +31,8 @@ class UserService extends Service {
    */
   async register(payload) {
     this.ctx.validate(this.registerTansfer);
-    const isRegister = await this.ctx.service.user.getUserInfo(payload);
-    if (isRegister.length === 1 && isRegister[0]._id) {
+    const userInfo = await this.ctx.service.user.findOne(payload);
+    if (userInfo && (userInfo._id || userInfo.phone)) {
       this.ctx.throw(500, '手机号已被注册');
     }
     return this.ctx.model.User.create(payload);
@@ -44,20 +44,30 @@ class UserService extends Service {
   async login(payload) {
     // this.ctx.validate(this.registerTansfer);
     const { phone, password } = payload;
-    const userInfo = await this.ctx.service.user.getUserInfo({ phone });
-    if (!userInfo.length) {
-      this.ctx.throw(401, '用户不存在!');
+    const userInfo = await this.ctx.service.user.findOne({ phone });
+    if (!userInfo || !userInfo._id) {
+      this.ctx.service.user.logout();
+      this.ctx.throw(500, '用户不存在!');
     }
-    if (password !== userInfo[0].password) {
-      this.ctx.throw(401, '密码错误!');
+    if (password !== userInfo.password) {
+      this.ctx.service.user.logout();
+      this.ctx.throw(500, '密码错误!');
     }
-    return userInfo[0];
+    return userInfo;
+  }
+  /**
+   * @name 登出
+   */
+  async logout() {
+    this.ctx.session.user = null;
+    const res = { code: 200, message: '退出登录成功' };
+    return res;
   }
   // eslint-disable-next-line valid-jsdoc
   /**
-   * @name 获取用户信息
+   * @name 从数据库获取用户信息
    */
-  async getUserInfo(payload) {
+  async query(payload) {
     return this.ctx.model.User.find(payload);
   }
   /**
@@ -73,9 +83,17 @@ class UserService extends Service {
   async update(payload) {
     const _id = await this.ctx.service.user.getUserSession();
     if (!_id) {
-      this.ctx.throw(401, '请登录');
+      this.ctx.service.user.logout();
+      this.ctx.throw(500, '请登录');
     }
     return this.ctx.model.User.findByIdAndUpdate(_id, payload);
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * @name 从数据库获取单条用户信息
+   */
+  async findOne(payload) {
+    return this.ctx.model.User.findOne(payload);
   }
 }
 

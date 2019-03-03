@@ -21,4 +21,8 @@ module.exports = app => {
    * @name 用户登出
    */
   router.get('/api/logout', controller.user.logout);
+  /**
+   * @name 用户登录完成获取信息
+   */
+  router.get('/api/userInfo', controller.user.findOne);
 };

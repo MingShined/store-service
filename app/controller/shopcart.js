@@ -11,6 +11,14 @@ class ShopcartController extends Controller {
     const res = await ctx.service.shopcart.create(ctx.request.body);
     ctx.helper.success({ ctx, res });
   }
+  /**
+   * @name 获取当前登录用户购物车列表
+   */
+  async query() {
+    const { ctx } = this;
+    const res = await ctx.service.shopcart.query();
+    ctx.helper.success({ ctx, res });
+  }
 }
 
 module.exports = ShopcartController;

@@ -22,7 +22,7 @@ module.exports = (option, app) => {
         ctx.body.errors = err.errors;
       }
       if (status === 401) {
-        ctx.session.session.user = null;
+        ctx.session.user = null;
       }
       ctx.status = status;
     }

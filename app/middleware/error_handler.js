@@ -3,6 +3,11 @@
 module.exports = (option, app) => {
   return async function(ctx, next) {
     try {
+      // const user = ctx.session.user;
+      // if (!user) {
+      //   this.ctx.throw('请登录', 401);
+      //   return;
+      // }
       await next();
     } catch (err) {
       // 所有的异常都在 app 上触发一个 error 事件，框架会记录一条错误日志

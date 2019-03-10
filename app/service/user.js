@@ -65,7 +65,7 @@ class UserService extends Service {
   }
   // eslint-disable-next-line valid-jsdoc
   /**
-   * @name 从数据库获取用户信息
+   * @name 从数据库获取用户信息列表
    */
   async query(payload) {
     return this.ctx.model.User.find(payload);

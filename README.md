@@ -68,8 +68,15 @@ $ npm stop
 
 5.用户表(user)
 ```
-    userInfo: { type: mongoose.Schema.Types.Mixed },
-    goodInfo: { type: mongoose.Schema.Types.Mixed },
+    username: {
+      type: String,
+      default: `淘衣用户${new Date().getTime()}`,
+    },
+    password: { type: String, required: true },
+    realName: { type: String, default: '' },
+    phone: { type: Number, unique: true, required: true, default: null },
+    address: { type: String, default: '' },
+    gmtModify: { type: Date, default: Date.now },
 ```
 
 6.订单表(order)

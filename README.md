@@ -31,3 +31,50 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+
+
+> 数据库设计
+
+1.轮播图表(banner)
+```
+  imgUrl: { type: String }
+```
+
+2.商品分类表(sort)
+```
+    imgUrl: { type: String },
+    name: { type: String },
+```
+
+3.商品表(good)
+```
+    imgUrl: { type: String },
+    name: { type: String },
+    price: { type: Number },
+    sort: { type: String },
+    bannerList: { type: mongoose.Schema.Types.Mixed },
+    details: { type: String },
+    gmtCreate: { type: String },
+    status: { type: Number },
+    hot: { type: Number },
+    size: { type: mongoose.Schema.Types.Mixed },
+```
+
+4.购物车表(shopcart)
+```
+    userInfo: { type: mongoose.Schema.Types.Mixed },
+    goodInfo: { type: mongoose.Schema.Types.Mixed },
+```
+
+5.用户表(user)
+```
+    userInfo: { type: mongoose.Schema.Types.Mixed },
+    goodInfo: { type: mongoose.Schema.Types.Mixed },
+```
+
+6.订单表(order)
+```
+    userInfo: { type: mongoose.Schema.Types.Mixed },
+    orderInfo: { type: mongoose.Schema.Types.Mixed },
+    gmtCreate: { type: Date, default: Date.now },
+```

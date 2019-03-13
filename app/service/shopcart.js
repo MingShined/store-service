@@ -3,10 +3,29 @@
 const Service = require('egg').Service;
 
 class ShopcartService extends Service {
+  constructor(ctx) {
+    super(ctx);
+    this.shopcartTansfer = {
+      id: {
+        type: 'string',
+        required: true,
+        allowEmpty: false,
+      },
+      size: {
+        type: 'string',
+        required: true,
+        allowEmpty: false,
+      },
+      quantity: {
+        type: 'string',
+        required: false,
+        allowEmpty: true,
+      },
+    };
+  }
   async create(payload) {
     const { ctx } = this;
-    const goodId = payload.id;
-    const size = payload.size;
+    const { goodId, size, quantity } = payload;
 
     /**
      * @name ===========未登录==============
@@ -15,6 +34,11 @@ class ShopcartService extends Service {
     if (!userId) {
       ctx.throw('请登录', 401);
     }
+
+    /**
+     * @name ===========校验参数==============
+     */
+    this.ctx.validate(this.shopcartTansfer);
 
     /**
      * @name ===已经添加过相同商品，数量加1===
@@ -41,8 +65,8 @@ class ShopcartService extends Service {
     userInfo = JSON.parse(JSON.stringify(userInfo));
     let goodInfo = await ctx.service.good.findOne({ _id: goodId });
     goodInfo = JSON.parse(JSON.stringify(goodInfo));
-    goodInfo = { ...goodInfo, size, quantity: 1 };
-    const result = { userInfo, goodInfo, userId };
+    goodInfo = { ...goodInfo, size, quantity: quantity ? quantity : 1 };
+    const result = { userInfo, goodInfo };
     return ctx.model.Shopcart.create(result);
   }
   async findOne(payload) {
@@ -58,7 +82,7 @@ class ShopcartService extends Service {
     if (!userId) {
       ctx.throw('请登录', 401);
     }
-    return ctx.model.Shopcart.find({ userId });
+    return ctx.model.Shopcart.find({ 'userInfo._id': userId });
   }
 }
 

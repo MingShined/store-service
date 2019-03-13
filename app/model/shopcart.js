@@ -7,7 +7,6 @@ module.exports = app => {
   const shopcartSchema = new Schema({
     userInfo: { type: mongoose.Schema.Types.Mixed },
     goodInfo: { type: mongoose.Schema.Types.Mixed },
-    userId: { type: String },
   });
 
   return mongoose.model('Shopcart', shopcartSchema, 'shopcart');

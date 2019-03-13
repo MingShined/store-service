@@ -88,6 +88,11 @@ class OrderService extends Service {
   async queryAll() {
     return this.ctx.model.Order.find();
   }
+  async update(payload) {
+    return this.ctx.model.Order.findByIdAndUpdate(payload.id, {
+      'orderInfo.status': payload.status,
+    });
+  }
 }
 
 module.exports = OrderService;

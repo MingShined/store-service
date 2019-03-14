@@ -25,8 +25,8 @@ class GoodService extends Service {
   async count() {
     return this.ctx.model.Good.find().count();
   }
-  async find(id) {
-    return this.ctx.model.Good.findById(id);
+  async find(_id) {
+    return this.ctx.model.Good.findOne({ _id });
   }
   async update(id, payload) {
     return this.ctx.model.Good.findByIdAndUpdate(id, payload);

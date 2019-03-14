@@ -74,6 +74,7 @@ class UserService extends Service {
    * @name 获取session
    */
   async getUserSession() {
+    console.log(`----${this.ctx.cookies.get('user-cookie')}`);
     return this.ctx.cookies.get('user-cookie');
   }
   // eslint-disable-next-line valid-jsdoc

@@ -27,7 +27,7 @@ module.exports = (option, app) => {
         ctx.body.errors = err.errors;
       }
       if (status === 401) {
-        ctx.session.user = null;
+        ctx.cookies.set('user-cookie', null);
       }
       ctx.status = status;
     }

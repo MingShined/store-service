@@ -59,7 +59,7 @@ class UserService extends Service {
    * @name 登出
    */
   async logout() {
-    this.ctx.session.user = null;
+    this.ctx.cookies.set('user-cookie', null);
     const res = { code: 200, message: '退出登录成功' };
     return res;
   }
@@ -74,7 +74,7 @@ class UserService extends Service {
    * @name 获取session
    */
   async getUserSession() {
-    return this.ctx.session.user;
+    return this.ctx.cookies.get('user-cookie');
   }
   // eslint-disable-next-line valid-jsdoc
   /**
@@ -84,7 +84,7 @@ class UserService extends Service {
     const _id = await this.ctx.service.user.getUserSession();
     if (!_id) {
       this.ctx.service.user.logout();
-      this.ctx.throw(500, '请登录');
+      this.ctx.throw(401, '请登录');
     }
     return this.ctx.model.User.findByIdAndUpdate(_id, payload);
   }

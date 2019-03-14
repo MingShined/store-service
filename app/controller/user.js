@@ -19,7 +19,7 @@ class UserController extends Controller {
     const { ctx } = this;
     const { service, request } = ctx;
     const res = await service.user.login(request.body);
-    ctx.session.user = res._id;
+    this.ctx.cookies.set('user-cookie', res._id);
     ctx.helper.success({ ctx, res });
   }
   /**

@@ -54,7 +54,7 @@ class ShopcartService extends Service {
       ++updateCartInfo.goodInfo.quantity;
       return ctx.model.Shopcart.findByIdAndUpdate(
         updateCartInfo._id,
-        updateCartInfo,
+        updateCartInfo
       );
     }
 

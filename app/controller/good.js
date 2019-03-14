@@ -15,7 +15,7 @@ class GoodController extends Controller {
   }
   async find() {
     const _id = this.ctx.params.id;
-    this.ctx.body = await this.ctx.service.good.find(_id);
+    this.ctx.body = await this.ctx.service.good.findOne({ _id });
   }
   async update() {
     const { request } = this.ctx;

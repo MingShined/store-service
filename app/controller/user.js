@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('egg').Controller;
+const jwt = require('jwt-simple');
 
 class UserController extends Controller {
   /**
@@ -16,11 +17,14 @@ class UserController extends Controller {
    * @name 登录
    */
   async login() {
-    const { ctx } = this;
+    const { ctx, app } = this;
     const { service, request } = ctx;
     const res = await service.user.login(request.body);
-    this.ctx.cookies.set('user-cookie', res._id);
-    ctx.helper.success({ ctx, res });
+    const token = jwt.encode(res._id, app.config.secret);
+    const result = { token, message: '登录成功' };
+    ctx.cookies.set('Authorization', token);
+    ctx.set('Authorization', token);
+    ctx.body = result;
   }
   /**
    * @name 登出

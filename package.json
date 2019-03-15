@@ -11,6 +11,7 @@
     "egg-mongoose": "^3.1.1",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
+    "jwt-simple": "^0.5.5",
     "moment": "^2.24.0"
   },
   "devDependencies": {

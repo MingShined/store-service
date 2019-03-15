@@ -1,6 +1,7 @@
 'use strict';
 
 const Service = require('egg').Service;
+const jwt = require('jwt-simple');
 
 class UserService extends Service {
   constructor(ctx) {
@@ -59,7 +60,8 @@ class UserService extends Service {
    * @name 登出
    */
   async logout() {
-    this.ctx.cookies.set('user-cookie', null);
+    this.ctx.cookies.set('Authorization', null);
+    this.ctx.set('Authorization', null);
     const res = { code: 200, message: '退出登录成功' };
     return res;
   }
@@ -74,8 +76,11 @@ class UserService extends Service {
    * @name 获取session
    */
   async getUserSession() {
-    console.log(`----${this.ctx.cookies.get('user-cookie')}`);
-    return this.ctx.cookies.get('user-cookie');
+    const token = jwt.decode(
+      this.ctx.get('Authorization'),
+      this.app.config.secret
+    );
+    return token;
   }
   // eslint-disable-next-line valid-jsdoc
   /**

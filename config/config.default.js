@@ -26,6 +26,8 @@ module.exports = appInfo => {
     },
   };
 
+  config.secret = 'user';
+
   /**
    * @name 配置bodyparser
    */

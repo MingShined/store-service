@@ -20,10 +20,10 @@ class UserController extends Controller {
     const { ctx, app } = this;
     const { service, request } = ctx;
     const res = await service.user.login(request.body);
-    const token = jwt.encode(res._id, app.config.secret);
-    const result = { token, message: '登录成功' };
-    ctx.cookies.set('Authorization', token);
-    ctx.set('Authorization', token);
+    const Authorization = jwt.encode(res._id, app.config.secret);
+    const result = { Authorization, message: '登录成功' };
+    ctx.cookies.set('Authorization', Authorization);
+    ctx.set('Authorization', Authorization);
     ctx.body = result;
   }
   /**

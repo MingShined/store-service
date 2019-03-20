@@ -17,8 +17,8 @@ class ShopcartService extends Service {
         allowEmpty: false,
       },
       quantity: {
-        type: 'string',
-        required: false,
+        type: 'number',
+        required: true,
         allowEmpty: true,
       },
     };

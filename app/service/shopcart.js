@@ -54,7 +54,7 @@ class ShopcartService extends Service {
       ++updateCartInfo.goodInfo.quantity;
       return ctx.model.Shopcart.findByIdAndUpdate(
         updateCartInfo._id,
-        updateCartInfo
+        updateCartInfo,
       );
     }
 
@@ -83,6 +83,17 @@ class ShopcartService extends Service {
       ctx.throw('请登录', 401);
     }
     return ctx.model.Shopcart.find({ 'userInfo._id': userId });
+  }
+  async delete(id) {
+    const { ctx } = this;
+    /**
+     * @name ===========未登录==============
+     */
+    const userId = await ctx.service.user.getUserSession();
+    if (!userId) {
+      ctx.throw('请登录', 401);
+    }
+    return ctx.model.Shopcart.findByIdAndDelete(id);
   }
 }
 

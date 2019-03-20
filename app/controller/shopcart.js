@@ -19,6 +19,15 @@ class ShopcartController extends Controller {
     const res = await ctx.service.shopcart.query();
     ctx.helper.success({ ctx, res });
   }
+  /**
+   * @name 删除购物车
+   */
+  async delete() {
+    const { ctx } = this;
+    const _id = ctx.params.id;
+    const res = await ctx.service.shopcart.delete(_id);
+    ctx.helper.success({ ctx, res });
+  }
 }
 
 module.exports = ShopcartController;

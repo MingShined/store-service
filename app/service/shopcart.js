@@ -50,12 +50,16 @@ class ShopcartService extends Service {
     });
     // 若存在，累加数量
     if (shopcartInfo) {
+      let userInfo = await ctx.service.user.findOne({ _id: userId });
+      userInfo = JSON.parse(JSON.stringify(userInfo));
       const updateCartInfo = JSON.parse(JSON.stringify(shopcartInfo));
-      ++updateCartInfo.goodInfo.quantity;
-      return ctx.model.Shopcart.findByIdAndUpdate(
+      updateCartInfo.goodInfo.quantity += quantity;
+      updateCartInfo.userInfo = userInfo;
+      await ctx.model.Shopcart.findByIdAndUpdate(
         updateCartInfo._id,
-        updateCartInfo,
+        updateCartInfo
       );
+      return ctx.service.shopcart.findOne({ _id: updateCartInfo._id });
     }
 
     /**

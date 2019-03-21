@@ -92,7 +92,8 @@ class UserService extends Service {
       this.ctx.service.user.logout();
       this.ctx.throw(401, '请登录');
     }
-    return this.ctx.model.User.findByIdAndUpdate(_id, payload);
+    await this.ctx.model.User.findByIdAndUpdate(_id, payload);
+    return this.ctx.service.user.findOne({ _id });
   }
   // eslint-disable-next-line valid-jsdoc
   /**

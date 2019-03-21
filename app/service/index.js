@@ -31,7 +31,8 @@ class IndexService extends Service {
     return this.ctx.model.Sort.find(payload);
   }
   async updateSort(_id, payload) {
-    return this.ctx.model.Sort.findByIdAndUpdate(_id, payload);
+    await this.ctx.model.Sort.findByIdAndUpdate(_id, payload);
+    return this.ctx.model.Sort.findOne({ _id });
   }
   async deleteSort(_id) {
     return this.ctx.model.Sort.findByIdAndDelete(_id);

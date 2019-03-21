@@ -10,7 +10,7 @@ class OrderController extends Controller {
   }
   async query() {
     const { ctx } = this;
-    const res = await ctx.service.order.query();
+    const res = await ctx.service.order.query(ctx.query);
     ctx.helper.success({ ctx, res });
   }
   async queryAll() {
@@ -21,6 +21,12 @@ class OrderController extends Controller {
   async update() {
     const { ctx } = this;
     const res = await ctx.service.order.update(ctx.request.body);
+    ctx.helper.success({ ctx, res });
+  }
+  async findOne() {
+    const { ctx } = this;
+    const _id = ctx.params.id;
+    const res = await ctx.service.order.findOne({ _id });
     ctx.helper.success({ ctx, res });
   }
 }

@@ -74,7 +74,7 @@ class OrderService extends Service {
     });
     return { message: '下单成功' };
   }
-  async query() {
+  async query(payload) {
     const { ctx } = this;
     /**
      * @name ===========未登录==============
@@ -82,6 +82,9 @@ class OrderService extends Service {
     const userId = await ctx.service.user.getUserSession();
     if (!userId) {
       ctx.throw('请登录', 401);
+    }
+    if (payload && payload.status !== undefined) {
+      return ctx.model.Order.find({ 'userInfo._id': userId, 'orderInfo.status': +payload.status });
     }
     return ctx.model.Order.find({ 'userInfo._id': userId });
   }
@@ -92,6 +95,17 @@ class OrderService extends Service {
     return this.ctx.model.Order.findByIdAndUpdate(payload.id, {
       'orderInfo.status': payload.status,
     });
+  }
+  async findOne(payload) {
+    const { ctx } = this;
+    /**
+     * @name ===========未登录==============
+     */
+    const userId = await ctx.service.user.getUserSession();
+    if (!userId) {
+      ctx.throw('请登录', 401);
+    }
+    return ctx.model.Order.findOne(payload);
   }
 }
 

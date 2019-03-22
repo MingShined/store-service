@@ -55,7 +55,7 @@ class UserController extends Controller {
     const { ctx } = this;
     const _id = await this.ctx.service.user.getUserSession();
     if (!_id) {
-      ctx.throw(500, '亲还没有登录哦');
+      ctx.throw(401, '亲还没有登录哦');
     }
     const res = await ctx.service.user.findOne({ _id });
     this.ctx.helper.success({ ctx, res });
